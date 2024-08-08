@@ -8,4 +8,4 @@ const user = new mongoose.Schema({
 },{timestamps:true});
 
 
-Module.exports = mongoose.model("userScemas",user)
+module.exports = mongoose.model("userScemas",user)
