@@ -12,4 +12,4 @@ const podcasts = new mongoose.Schema(
   { timestamps: true }
 );
 
-Module.exports = mongoose.model("podcastScema", podcasts);
+module.exports = mongoose.model("podcastScema", podcasts);

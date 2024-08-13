@@ -15,8 +15,10 @@ app.get("/", (req, res) => {
 
 const userApi = require("./routes/userRouter");
 const categoryApi = require("./routes/categoryRouter");
+const podcastApi = require("./routes/podcastRouter");
 app.use("/userAuth/v1", userApi);
 app.use("/api/v1", categoryApi);
+app.use("/api/v1", podcastApi);
 connetToDb().then(() => {
   app.listen(PORT, () => {
     console.log(`server is running in port ${PORT}`);
