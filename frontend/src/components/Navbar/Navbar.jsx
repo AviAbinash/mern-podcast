@@ -48,7 +48,7 @@ const Navbar = () => {
               Sign Up
             </Link>
           </div>
-          <div className=" w-4/6 flex items-center justify-end lg:hidden">
+          <div className=" w-4/6 flex items-center justify-end lg:hidden z-50">
             <button className="text-4xl">
               <GiHamburgerMenu onClick={handleSideBar} />
             </button>

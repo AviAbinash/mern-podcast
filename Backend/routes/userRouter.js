@@ -11,11 +11,11 @@ const authMiddleware = require("../middleware/authMiddleware")
 
 router.post("/signup", async (req, res) => {
   try {
-    const { userName, email, password } = req.body;
-    if (!email || !userName || !password) {
+    const { username, email, password } = req.body;
+    if (!email || !username || !password) {
       res.status(400).json({ message: "All fields are required" });
     }
-    if (userName.length < 5) {
+    if (username.length < 5) {
       res.status(400).json({ message: "username must have 5 charecters" });
     }
     if (password.length < 6) {
@@ -23,7 +23,7 @@ router.post("/signup", async (req, res) => {
     }
 
     const emailExist = await User.findOne({ email: email });
-    const userExist = await User.findOne({ userName: userName });
+    const userExist = await User.findOne({ username: username });
     if (emailExist || userExist) {
       res.status(400).json({ message: "user already exist" });
     }
@@ -31,7 +31,7 @@ router.post("/signup", async (req, res) => {
     console.log(encryptPassword, "encryptPassword>>>>>>>>>>>");
     const userCreated = await User.create({
       email: email,
-      userName: userName,
+      username: username,
       password: encryptPassword,
     });
     return res.status(201).json({ message: "user created successfully" });
@@ -68,7 +68,9 @@ router.post("/signin", async (req, res) => {
       secure: process.env.NODE_ENV === "production",
       sameSite: "none",
     });
-    return res.status(200).json({ message: "login successfull" });
+    return res
+      .status(200)
+      .send({ message: "login successfull", userToken: loginToken });
   } catch (err) {
     console.log(err, "err");
     res.status(400).json({ err: err });

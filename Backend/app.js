@@ -4,7 +4,11 @@ const cookieParser = require("cookie-parser")
 const app = express();
 const cors = require("cors");
 const PORT = 8080;
-app.use(cors());
+const corsOptions = {
+  origin: "http://localhost:5173", // Your frontend URL
+  credentials: true, // Allow cookies or other credentials to be sent
+};
+app.use(cors(corsOptions));
 
 const connetToDb = require("./connections/connection");
 app.use(express.json());

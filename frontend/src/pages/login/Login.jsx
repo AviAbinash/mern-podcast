@@ -1,6 +1,34 @@
-import React from 'react'
- import { Link } from "react-router-dom";
+import React,{useState} from "react";
+import { Link,useNavigate } from "react-router-dom";
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const Login = () => {
+  const [formValues, setformValues] = useState({
+    email: "",
+    password: "",
+  });
+  const navigate = useNavigate();
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setformValues({ ...formValues, [name]: value });
+  };
+
+  const handleSubmit = async () => {
+    console.log("formValues");
+    try {
+      console.log(formValues, "formValues");
+      const res = await axios.post(
+        "http://localhost:8080/userAuth/v1/signin",
+        formValues,
+        { credentials: "include" }
+      );
+      console.log(res, "res");
+      navigate("/login");
+    } catch (error) {
+      toast.error(error);
+    }
+  };
   return (
     <>
       <div className="h-screen bg-green-100 flex items-center justify-center">
@@ -17,6 +45,7 @@ const Login = () => {
                 required
                 placeholder="Email"
                 name="email"
+                onChange={handleChange}
               />
             </div>
             <div className="w-full flex flex-col mt-2">
@@ -27,17 +56,24 @@ const Login = () => {
                 required
                 placeholder="Password"
                 name="password"
+                onChange={handleChange}
               />
             </div>
             <div className="w-full flex flex-col mt-4">
-              <button className="bg-green-900 font-semibold text-xl text-white rounded py-2">
+              <button
+                className="bg-green-900 font-semibold text-xl text-white rounded py-2"
+                onClick={handleSubmit}
+              >
                 Login
               </button>
             </div>
             <div className="w-full flex flex-col mt-4">
               <p className="text-center">
                 Donot have any account?
-                <Link to="/signup" className="font-semibold hover:text-blue-600">
+                <Link
+                  to="/signup"
+                  className="font-semibold hover:text-blue-600"
+                >
                   signup
                 </Link>
               </p>
@@ -47,6 +83,6 @@ const Login = () => {
       </div>
     </>
   );
-}
+};
 
-export default Login
+export default Login;
